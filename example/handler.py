@@ -5,7 +5,6 @@ def character_serializer(obj):
     return {
         'id': obj.id,
         'name': obj.name,
-        'created_at': obj.created_at.isoformat()
     }
 
 

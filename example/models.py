@@ -5,20 +5,33 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Planet(db.Model):
-
-    __tablename__ = 'planet'
+class PromoSale(db.Model):
+    __tablename__ = 'Промоакция'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
     description = db.Column(db.Text(), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    prizes = db.relationship('Participant', backref='PromoSale', lazy=True)
 
 
-class Character(db.Model):
+class Prize(db.Model):
+    __tablename__ = 'Приз'
 
-    __tablename__ = 'character'
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.Text(), nullable=False)
+
+
+class Participant(db.Model):
+    __tablename__ = 'Участник'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    promosale_id = db.Column(db.Integer, db.ForeignKey('promosale.id'),
+                             nullable=False)
+
+
+class Result(db.Model):
+    __tablename__ = 'Результат проведения розыгрыша'
+
+    winner = db.Column(db.Integer, db.ForeignKey('participant.id'))
+    prize = db.Column(db.String(150), db.ForeignKey('prize.id'))

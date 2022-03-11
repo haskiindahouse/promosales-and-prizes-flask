@@ -1,22 +1,34 @@
 from kim import Mapper, field
 
-from example.models import Planet, Character
+from example.models import PromoSale, Prize, Participant, Result
 
 
-class PlanetMapper(Mapper):
-
-    __type__ = Planet
+class PromoSaleMapper(Mapper):
+    __type__ = PromoSale
 
     id = field.Integer(read_only=True)
     name = field.String()
     description = field.String()
-    created_at = field.DateTime(read_only=True)
+    prizes = field.Field()
 
 
 class CharacterMapper(Mapper):
+    __type__ = Prize
 
-    __type__ = Character
+    id = field.Integer(read_only=True)
+    description = field.String()
+
+
+class ParticipantMapper(Mapper):
+    __type__ = Participant
 
     id = field.Integer(read_only=True)
     name = field.String()
-    created_at = field.DateTime(read_only=True)
+    promosale_id = field.Field()
+
+
+class ResultMapper(Mapper):
+    __type__ = Result
+
+    winner = field.Integer(read_only=True)
+    prize = field.String()

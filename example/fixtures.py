@@ -1,20 +1,15 @@
-from datetime import datetime
-
-
 def run():
     from example.app import app
-    from example.models import db, Character
-    created_at = datetime.utcnow().replace(
-        month=1, day=1, hour=10, minute=0, second=0, microsecond=0)
+    from example.models import db, PromoSale
 
     with app.test_request_context():
         db.drop_all()
         db.create_all()
-        db.session.add(Character(id=1, created_at=created_at, name='Obe Wan'))
-        db.session.add(Character(id=2, created_at=created_at, name='Luke Skywalker'))
-        db.session.add(Character(id=3, created_at=created_at, name='Yoda'))
-        db.session.add(Character(id=4, created_at=created_at, name='Darth Vader'))
-        db.session.add(Character(id=5, created_at=created_at, name='Princess Leia'))
+        db.session.add(PromoSale(id=1, name='Тестовая акция 1', description="Описание 1"))
+        db.session.add(PromoSale(id=2,  name='Тестовая акция 2', description="Описание 2"))
+        db.session.add(PromoSale(id=2,  name='Тестовая акция 3', description="Описание 3"))
+        db.session.add(PromoSale(id=2,  name='Тестовая акция 4', description="Описание 4"))
+        db.session.add(PromoSale(id=2,  name='Тестовая акция 5', description="Описание 5"))
 
         db.session.commit()
 

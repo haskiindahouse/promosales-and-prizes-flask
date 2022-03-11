@@ -17,10 +17,10 @@ if SETUP_DIRNAME != '':
 
 
 setup(
-    name="arrested_example",
+    name="Я-профессионал",
     version="0.0.1",
-    description='Example Arrested API',
-    long_description='Example Arrested API',
+    description='Промоакции и розыгрыши призов',
+    long_description='Вопрос №3. Промоакции и розыгрыши призов (максимум 40 баллов)',
     packages=find_packages(
         exclude=[]
     ),

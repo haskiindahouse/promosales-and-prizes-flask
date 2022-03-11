@@ -5,7 +5,7 @@ from arrested import (
     GetObjectMixin, PutObjectMixin, DeleteObjectMixin, ResponseHandler
 )
 
-from example.models import db, Character
+from example.models import db, PromoSale, Prize, Participant, Result
 
 app = Flask(__name__)
 api_v1 = ArrestedAPI(app, url_prefix='/v1')
@@ -13,14 +13,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////opt/code/example/starwars.db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-characters_resource = Resource('characters', __name__, url_prefix='/characters')
+characters_resource = Resource('promosale', __name__, url_prefix='/promosale')
 
 
 def character_serializer(obj):
     return {
         'id': obj.id,
         'name': obj.name,
-        'created_at': obj.created_at.isoformat()
+        'description': obj.description
     }
 
 
@@ -55,12 +55,12 @@ class CharactersIndexEndpoint(Endpoint, GetListMixin, CreateMixin):
 
     def get_objects(self):
 
-        characters = db.session.query(Character).all()
+        characters = db.session.query(PromoSale).all()
         return characters
 
     def save_object(self, obj):
 
-        character = Character(**obj)
+        character = PromoSale(**obj)
         db.session.add(character)
         db.session.commit()
         return character
@@ -81,10 +81,10 @@ class CharacterObjectEndpoint(Endpoint, GetObjectMixin,
     def get_object(self):
 
         obj_id = self.kwargs['obj_id']
-        obj = db.session.query(Character).filter(Character.id == obj_id).one_or_none()
+        obj = db.session.query(PromoSale).filter(PromoSale.id == obj_id).one_or_none()
         if not obj:
             payload = {
-                "message": "Character object not found.",
+                "message": "PromoSale object not found.",
             }
             self.return_error(404, payload=payload)
 
